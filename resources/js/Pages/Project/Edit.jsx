@@ -7,6 +7,7 @@ import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
 import { Head, Link, useForm } from "@inertiajs/react";
 
 export default function Create({ project }) {
+  // const { data: projectData } = project;
   const { data, setData, post, errors, reset } = useForm({
     image: "",
     name: project.name || "",
@@ -19,7 +20,7 @@ export default function Create({ project }) {
   const onSubmit = (e) => {
     e.preventDefault();
 
-    post(route("project.update", project.data.id));
+    post(route("project.update", project.id));
   };
 
   return (
@@ -115,6 +116,7 @@ export default function Create({ project }) {
                   name="status"
                   id="project_status"
                   className="mt-1 block w-full"
+                  value={data.status}
                   onChange={(e) => setData("status", e.target.value)}
                 >
                   <option value="">Select Status</option>
