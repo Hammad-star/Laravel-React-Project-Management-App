@@ -103,7 +103,7 @@ class ProjectController extends Controller
     public function edit(Project $project)
     {
         return inertia('Project/Edit', [
-            'project' => new ProjectResource($project),
+            'project' => (new ProjectResource($project))->resolve(),
         ]);
     }
 
@@ -118,7 +118,7 @@ class ProjectController extends Controller
         $data['updated_by'] = Auth::id();
         if ($image) {
             if ($project->image_path) {
-                Storage::disk('public')->delete($project->image_path);
+                Storage::disk('public')->deleteDirectory(dirname($project->image_path));
             }
             $data['image_path'] = $image->store('project/'.Str::random(), 'public');
         }
@@ -133,6 +133,8 @@ class ProjectController extends Controller
     public function destroy(Project $project)
     {
         $name = $project->name;
+         // Delete related tasks first
+        $project->tasks()->delete();
         $project->delete();
         if ($project->image_path) {
             Storage::disk('public')->deleteDirectory(dirname($project->image_path));
