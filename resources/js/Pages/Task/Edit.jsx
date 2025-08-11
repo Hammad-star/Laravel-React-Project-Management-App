@@ -6,19 +6,23 @@ import TextInput from "@/Components/TextInput";
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
 import { Head, Link, useForm } from "@inertiajs/react";
 
-export default function Create({ projects, users }) {
+export default function Create({ task, projects, users }) {
   const { data, setData, post, errors, reset } = useForm({
     image: "",
-    name: "",
-    status: "",
-    description: "",
-    due_date: "",
+    name: task.name || "",
+    status: task.status || "",
+    description: task.description || "",
+    due_date: task.due_date || "",
+    project_id: task.project_id || "",
+    priority: task.priority || "",
+    assigned_user_id: task.assigned_user_id || "",
+    _method: "PUT",
   });
 
   const onSubmit = (e) => {
     e.preventDefault();
 
-    post(route("task.store"));
+    post(route("task.update", task.id));
   };
 
   return (
@@ -26,7 +30,7 @@ export default function Create({ projects, users }) {
       header={
         <div className="flex justify-between items-center">
           <h2 className="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
-            Create new Task
+            Edit task "{data.name}"
           </h2>
         </div>
       }
@@ -40,12 +44,18 @@ export default function Create({ projects, users }) {
               onSubmit={onSubmit}
               className="p-4 sm:p-8 bg-white dark:bg-gray-800 shadow sm:rounded-lg"
             >
+              {task.image_path && (
+                <div className="mb-4">
+                  <img src={task.image_path} className="w-64" />
+                </div>
+              )}
               <div>
                 <InputLabel htmlFor="task_project_id" value="Project" />
 
                 <SelectInput
                   name="project_id"
                   id="task_project_id"
+                  value={data.project_id}
                   className="mt-1 block w-full"
                   onChange={(e) => setData("project_id", e.target.value)}
                 >
@@ -121,6 +131,7 @@ export default function Create({ projects, users }) {
                 <SelectInput
                   name="status"
                   id="task_status"
+                  value={data.status}
                   className="mt-1 block w-full"
                   onChange={(e) => setData("status", e.target.value)}
                 >
@@ -139,6 +150,7 @@ export default function Create({ projects, users }) {
                 <SelectInput
                   name="priority"
                   id="task_priority"
+                  value={data.priority}
                   className="mt-1 block w-full"
                   onChange={(e) => setData("priority", e.target.value)}
                 >
@@ -160,6 +172,7 @@ export default function Create({ projects, users }) {
                 <SelectInput
                   name="assigned_user_id"
                   id="task_assigned_user"
+                  value={data.assigned_user_id}
                   className="mt-1 block w-full"
                   onChange={(e) => setData("assigned_user_id", e.target.value)}
                 >
