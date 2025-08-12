@@ -6,7 +6,7 @@ import { PROJECT_STATUS_CLASS_MAP, PROJECT_STATUS_TEXT_MAP } from "@/constants";
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
 import { Head, Link, router } from "@inertiajs/react";
 
-export default function Index({ projects, queryParams = null, success }) {
+export default function Index({ auth, projects, queryParams = null, success }) {
   queryParams = queryParams || {};
   const searchFieldChanged = (name, value) => {
     if (value) {
@@ -47,6 +47,7 @@ export default function Index({ projects, queryParams = null, success }) {
 
   return (
     <AuthenticatedLayout
+      user={auth.user}
       header={
         // user={auth.user}
         <div className="flex justify-between items-center">

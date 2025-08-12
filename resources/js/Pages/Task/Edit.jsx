@@ -6,7 +6,7 @@ import TextInput from "@/Components/TextInput";
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
 import { Head, Link, useForm } from "@inertiajs/react";
 
-export default function Create({ task, projects, users }) {
+export default function Create({ auth, task, projects, users }) {
   const { data, setData, post, errors, reset } = useForm({
     image: "",
     name: task.name || "",
@@ -27,6 +27,7 @@ export default function Create({ task, projects, users }) {
 
   return (
     <AuthenticatedLayout
+      user={auth.user}
       header={
         <div className="flex justify-between items-center">
           <h2 className="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">

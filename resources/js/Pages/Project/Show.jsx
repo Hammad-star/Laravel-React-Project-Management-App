@@ -6,7 +6,7 @@ import {
 } from "@/constants.jsx";
 import TasksTable from "../Task/TasksTable";
 
-export default function Show({ success, project, tasks, queryParams }) {
+export default function Show({ auth, success, project, tasks, queryParams }) {
   // console.log("project:", project);
 
   // const {
@@ -23,6 +23,7 @@ export default function Show({ success, project, tasks, queryParams }) {
 
   return (
     <AuthenticatedLayout
+      user={auth.user}
       header={
         <div className="flex items-center justify-between">
           <h2 className="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">

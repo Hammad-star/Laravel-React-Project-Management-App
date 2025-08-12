@@ -21,7 +21,7 @@ class TaskController extends Controller
      */
     public function index()
     {
-         $query = Task::query();
+        $query = Task::query();
 
 
         $sortField = request("sort_field", 'created_at');
@@ -135,9 +135,11 @@ class TaskController extends Controller
             ->with('success', "Task \"$name\" was deleted");
     }
 
-    public function myTasks(User $user)
+    public function myTasks()
     {
+        // /** @var \App\Models\User $user */
         // $user = auth()->user();
+        $user= Auth::user();
         $query = Task::query()->where('assigned_user_id', $user->id);
 
         $sortField = request("sort_field", 'created_at');

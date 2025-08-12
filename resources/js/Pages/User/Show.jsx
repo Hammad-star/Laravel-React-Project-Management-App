@@ -2,9 +2,10 @@ import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
 import { Head } from "@inertiajs/react";
 import { USER_STATUS_CLASS_MAP, USER_STATUS_TEXT_MAP } from "@/constants.jsx";
 import TasksTable from "../Task/TasksTable";
-export default function Show({ user, tasks, queryParams }) {
+export default function Show({ auth, user, tasks, queryParams }) {
   return (
     <AuthenticatedLayout
+      user={auth.user}
       header={
         <h2 className="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
           {`User "${user.name}"`}
